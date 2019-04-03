@@ -32,12 +32,18 @@ class CategoryController extends Controller
      */
     public function store(CategoryRequest $request)
     {
-        //        $validated = $request->validated();
-        $category = $request->isMethod('put') ? Category::findOrFail($request->id) : new Category;
         if ($request->isMethod('put')) {
-            $category->id = $request->input('id');
+            if (Category::where('id', $request->id )->exists()) {
+                $category = Category::findOrFail($request->id);
+                $category->id = $request->id;
+            }else{
+                return new Failed('');
+            }
+        } else {
+            $category = new Category;
         }
-        $category->name = $request->input('name');
+        $category->name = $request->name;
+        // $category = $request->i
         if ($category->save()) {
             return new Success('');
         } else return new Failed('');
@@ -66,7 +72,7 @@ class CategoryController extends Controller
     {
         $category = Category::where('id', '=', $id)->exists();
         if ($category) {
-            $resutl = Category::where('id','=',$id)->delete();
+            $resutl = Category::where('id', '=', $id)->delete();
             return new Success('');
         }
         return new Failed('');

@@ -27,3 +27,7 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 Route::Resource('/category','CategoryController');
 Route::put('/category','CategoryController@store');
 // Route::delete('/category','CategoryController@destroy');
+Route::Resource('/author', 'AuthorController');
+Route::put('/author', 'AuthorController@store');
+
+
