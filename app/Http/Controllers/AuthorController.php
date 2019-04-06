@@ -18,7 +18,7 @@ class AuthorController extends Controller
      */
     public function index()
     {
-        $authors = Author::all("id","name");
+        $authors = Author::all("id", "name");
         return CategoryResource::collection($authors);
     }
 
@@ -35,23 +35,23 @@ class AuthorController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
     {
-        if($request->isMethod('put')){
-            if(Author::where('id', $request->id)->exists()){
+        if ($request->isMethod('put')) {
+            if (Author::where('id', $request->id)->exists()) {
                 $author = Author::findOrFail($request->id);
                 $author->id = $request->id;
-            } else{
+            } else {
                 return Failed("");
             }
         } else {
             $author = new Author;
         }
         $author->name = $request->name;
-        if($author->save()){
+        if ($author->save()) {
             return new Success('');
         } else {
             return new Failed('');
@@ -62,12 +62,12 @@ class AuthorController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
+     * @param  int $id
      * @return \Illuminate\Http\Response
      */
     public function show($id)
     {
-        if(Author::where('id',$id)->exists()){
+        if (Author::where('id', $id)->exists()) {
             return new CategoryResource(Author::findOrFail($id));
         } else {
             return new Failed('');
@@ -77,7 +77,7 @@ class AuthorController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $id
+     * @param  int $id
      * @return \Illuminate\Http\Response
      */
     public function edit($id)
@@ -88,11 +88,11 @@ class AuthorController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param  \Illuminate\Http\Request $request
+     * @param  int $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request)
     {
         //
     }
@@ -100,11 +100,17 @@ class AuthorController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
+     * @param  int $id
      * @return \Illuminate\Http\Response
      */
     public function destroy($id)
     {
-        //
+        if (Author::where('id', $id)->exists()) {
+            $author = Author::where('id', $id);
+            $author->delete();
+            return new Success('');
+        } else {
+            return new Failed('');
+        };
     }
 }
