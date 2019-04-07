@@ -4,17 +4,16 @@ namespace App\Http\Controllers;
 
 use App\Story;
 use Illuminate\Http\Request;
+use App\Http\Resources\Story as StoryCollection;
 
 class StoryController extends Controller
 {
     //get all story
     public function getListAllStory()
     {
-        $listStory = Story::all();
-        return response()->json([
-            'status' => 200,
-            'results' => $listStory
-        ], 200);
+        $listStory = Story::with('category','author')->get();
+        return StoryCollection::collection($listStory);
+
     }
 
     /*

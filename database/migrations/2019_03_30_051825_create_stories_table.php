@@ -15,9 +15,9 @@ class CreateStoriesTable extends Migration
     {
         Schema::create('stories', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('story_name', 500);
-            $table->dateTime('update_date');
-            $table->integer('chapter_id');
+            $table->string('name', 500);
+//            $table->dateTime('update_date');
+//            $table->integer('chapter_id');
             $table->integer('likes');
             $table->integer('views');
             $table->integer('category_id')->unsigned();

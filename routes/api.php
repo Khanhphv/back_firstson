@@ -31,3 +31,9 @@ Route::Resource('/author', 'AuthorController');
 Route::put('/author', 'AuthorController@store');
 //Route::delete('/author', 'AuthorController@destroy');
 
+//Route::group(['prefix' => '/story'], function() {
+//});
+Route::get('/story/all','CategoryController@getListAllStory');
+Route::get('/story/listall','StoryController@getListAllStory');
+
+Route::Resource('story','StoryController');
