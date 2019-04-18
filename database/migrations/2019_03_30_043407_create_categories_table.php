@@ -16,7 +16,7 @@ class CreateCategoriesTable extends Migration
         Schema::create('categories', function (Blueprint $table) {
             $table->increments('id');
             $table->string('name');
-            $table->boolean('out_flag');
+            $table->boolean('out_flag'); // cờ để xóa
             $table->timestamps();
         });
     }

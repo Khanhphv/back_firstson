@@ -2,45 +2,90 @@
 
 namespace App\Http\Controllers;
 
-use App\Story;
 use Illuminate\Http\Request;
-use App\Http\Resources\Story as StoryCollection;
+use App\Story;
+use App\Http\Resources\Story as StoryResource;
+use App\Http\Requests\StoryRequest;
+use App\Http\Resources\Failed;
+use App\Http\Resources\Success;
 
 class StoryController extends Controller
 {
-    //get all story
-    public function getListAllStory()
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function index()
     {
-        $listStory = Story::with('category','author')->get();
-        return StoryCollection::collection($listStory);
-
+        $listStory = Story::with('category', 'author')->get();
+        return StoryResource::collection($listStory);
     }
 
-    /*
-     * request sample
-     * name
-     * status
-     * author_id
-     * category_id
+    /**
+     * Store a newly created resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
      */
-    public function addStory(Request $rq)
+    public function store(Request $request)
     {
         $story = new Story;
-        if ($this->validateData($rq)) {
-            $story->story_name  = $rq->name;
-            $story->status      = $rq->status;
-            $story->author_id   = $rq->author_id;
-            $story->category_id = $rq->category_id;
-            $story->save();
+        $story->name = $request->input('name');
+        $story->category_id = $request->input('category_id');
+        $story->author_id = $request->input('author_id');
+        $story->likes = 0;
+        $story->views = 0;
+        $story->status = 0;
+        if($story->save()) {
+            return new Success('');
+        }else{
+            return new Failed('');
         }
     }
 
-    private function validateData($param)
+    /**
+     * Display the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function show($id)
     {
-        if ($param->name && $param->stauts && $param->author_id && $param->category_id) {
-            return true;
-        } else {
-            return false;
-        }
+        //
+    }
+
+    /**
+     * Show the form for editing the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function edit($id)
+    {
+        //
+    }
+
+    /**
+     * Update the specified resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function update(Request $request, $id)
+    {
+        return "khdan";
+    }
+
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function destroy($id)
+    {
+        return 'dsadasd';
     }
 }

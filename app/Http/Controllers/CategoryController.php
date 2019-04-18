@@ -43,6 +43,7 @@ class CategoryController extends Controller
             $category = new Category;
         }
         $category->name = $request->name;
+        $category->out_flag = 1;
         // $category = $request->i
         if ($category->save()) {
             return new Success('');
@@ -77,4 +78,7 @@ class CategoryController extends Controller
         }
         return new Failed('');
     }
+    public function getListAllStory() {
+    }
+
 }
