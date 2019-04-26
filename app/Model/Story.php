@@ -8,7 +8,6 @@ use Illuminate\Database\Eloquent\Model;
 class Story extends Model
 {
     protected $table = "stories";
-
     public function category()
     {
         return $this->belongsTo('App\Category');

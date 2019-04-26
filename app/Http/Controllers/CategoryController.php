@@ -58,8 +58,11 @@ class CategoryController extends Controller
      */
     public function show($id)
     {
-        $category = Category::findOrFail($id);
-        return  new CategoryResource($category);
+        if($this->isExist($id)){
+            return new CategoryResource($category = Category::findOrFail($id));
+        } else {
+            return new Failed('');
+        }
     }
 
 
@@ -78,7 +81,10 @@ class CategoryController extends Controller
         }
         return new Failed('');
     }
-    public function getListAllStory() {
+
+    public function isExist ($id){
+        $category = Category::where('id', '=', $id)->exists();
+        return $category;
     }
 
 }

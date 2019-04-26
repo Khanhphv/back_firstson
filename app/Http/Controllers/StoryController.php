@@ -3,11 +3,14 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 use App\Story;
 use App\Http\Resources\Story as StoryResource;
 use App\Http\Requests\StoryRequest;
 use App\Http\Resources\Failed;
 use App\Http\Resources\Success;
+use App\Http\Controllers\CategoryController as Category;
+use App\Repositories\StoryRepositories;
 
 class StoryController extends Controller
 {
@@ -16,10 +19,12 @@ class StoryController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+
     public function index()
     {
-        $listStory = Story::with('category', 'author')->get();
-        return StoryResource::collection($listStory);
+        $repo = new StoryRepositories();
+        $listRepo = $repo->getList(20);
+        return response()->json([$listRepo],200);
     }
 
     /**
@@ -30,10 +35,15 @@ class StoryController extends Controller
      */
     public function store(Request $request)
     {
+        $category = new Category();
         $story = new Story;
         $story->name = $request->input('name');
         $story->category_id = $request->input('category_id');
         $story->author_id = $request->input('author_id');
+        $khanh = 'Khanh';
+        if (!$category->isExist($story->category_id)) {
+            return new Failed('');
+        }
         $story->likes = 0;
         $story->views = 0;
         $story->status = 0;
@@ -52,7 +62,9 @@ class StoryController extends Controller
      */
     public function show($id)
     {
-        //
+        $repo = new StoryRepositories();
+        $listRepo = $repo->getIndex($id);
+        return response()->json([$listRepo],200);
     }
 
     /**
