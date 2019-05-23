@@ -20,10 +20,10 @@ class CreateStoriesTable extends Migration
 //            $table->integer('chapter_id');
             $table->integer('likes')->default(0);
             $table->integer('views')->default(0);
-            $table->integer('category_id')->unsigned();
+//            $table->integer('category_id')->unsigned();
             $table->integer('author_id')->unsigned();
             $table->boolean('status')->default(0);
-            $table->foreign("category_id")->references("id")->on("categories")->onDelete('cascade');
+//            $table->foreign("category_id")->references("id")->on("categories")->onDelete('cascade');
             $table->foreign("author_id")->references("id")->on("authors")->onDelete('cascade');
             $table->timestamps();
         });

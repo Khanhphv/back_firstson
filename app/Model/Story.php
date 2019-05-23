@@ -8,13 +8,13 @@ use Illuminate\Database\Eloquent\Model;
 class Story extends Model
 {
     protected $table = "stories";
-    public function category()
+    public function categories()
     {
-        return $this->belongsTo('App\Category');
+        return $this->belongsToMany('App\Category', 'story_category');
     }
 
-    public function author()
+    public function authors()
     {
-        return $this->belongsTo('App\Author');
+        return $this->belongsTo('App\Author', 'author_id');
     }
 }

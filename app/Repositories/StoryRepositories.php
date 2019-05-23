@@ -3,35 +3,36 @@
 
 namespace App\Repositories;
 
+use App\Category;
+use App\Model\StoryCategory;
 use App\Object\ResultObject ;
 use App\Object\StoryObject;
 use App\Story;
 use http\Exception;
+use Illuminate\Support\Facades\DB;
 class StoryRepositories
 {
 
-    public function getList($limit =0){
+    public function getList($limit =0 , $param){
         $result = new ResultObject();
-        $storyFomat = new StoryObject();
+        $listStory = Story::with( 'categories','authors');
         try {
-            if($limit ===0){
-                $listStory = Story::with('category', 'author')->get();
+            if(!$param->category && !$param->author) {
+                if($limit === 0){
+                    $listStory = $listStory->get();
+                } else {
+                    $listStory = $listStory->paginate(10);
+
+                };
             } else {
-                $listStory = Story::with('category', 'author')->paginate($limit);
-            };
-            if ($listStory){
-                $data = [];
-                foreach ($listStory as $story){
-                    $tmp = new \stdClass();
-                    $tmp->id = $story->id;
-                    $tmp->name = $story->name;
-                    $tmp->category = $story->category->name;
-                    $tmp->author = $story->author->name;
-                    $tmp->status = $story->status;
-                    $tmp->updated_at = $story->updated_at;
-                    array_push($data, $tmp);
+                if($param->category) {
+                    $listStory = Category::with('stories')->where('id', '=' , $param->category)->get();
+                    $listStory = $listStory[0]->stories;
                 }
-                $result->result = $data;
+            }
+
+            if ($listStory){
+                $result->result = $listStory;
                 $result->message = "Get list story";
                 $result->messageCode = 1;
             }
@@ -42,7 +43,7 @@ class StoryRepositories
     public function getIndex($id = 0){
         $result = new ResultObject();
         try {
-            $story = Story::findOrFail($id);
+            $story = Story::with('categories','authors')->findOrFail($id);
             if($story){
                 $result->messageCode = 1;
                 $result->message = "Get success";

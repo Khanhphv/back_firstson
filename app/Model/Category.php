@@ -3,11 +3,11 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
-
+use App\Story;
 class Category extends Model
 {
     protected $table = "categories";
-    public function story() {
-        return $this->hasMany('App\Story');
+    public function stories() {
+        return $this->belongsToMany(Story::class, 'story_category');
     }
 }

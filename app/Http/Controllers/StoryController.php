@@ -20,11 +20,12 @@ class StoryController extends Controller
      * @return \Illuminate\Http\Response
      */
 
-    public function index()
+    public function index(Request $rq)
     {
         $repo = new StoryRepositories();
-        $listRepo = $repo->getList(20);
-        return response()->json([$listRepo],200);
+            $listRepo = $repo->getList(20, $rq);
+        return response()->json($listRepo,200);
+
     }
 
     /**
