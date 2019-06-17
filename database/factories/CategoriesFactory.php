@@ -1,7 +1,7 @@
 <?php
 
 use Faker\Generator as Faker;
-use App\Category;
+use App\Model\Category;
 
 $factory->define(Category ::class, function (Faker $faker) {
     return [

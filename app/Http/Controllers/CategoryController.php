@@ -7,7 +7,7 @@ use App\Http\Resources\Category as CategoryResource;
 use App\Http\Resources\Failed;
 use App\Http\Resources\Success;
 use Illuminate\Http\Request;
-use App\Category;
+use App\Model\Category;
 
 class CategoryController extends Controller
 {

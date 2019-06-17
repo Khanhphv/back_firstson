@@ -1,13 +1,14 @@
 <?php
 
-namespace App;
+namespace App\Model;
 
 use Illuminate\Database\Eloquent\Model;
 
 class Author extends Model
 {
-    protected $table = "authors";
+    protected $table = "author";
+    protected $hidden = ['created_at','updated_at'];
     public function story(){
-        return $this->hasMany('App\Story');
+        return $this->hasMany('App\Model\Story');
     }
 }

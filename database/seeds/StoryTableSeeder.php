@@ -6,7 +6,7 @@
  * Time: 10:44 PM
  */
 use Illuminate\Database\Seeder;
-use App\Story;
+use App\Model\Story;
 class StoryTableSeeder extends Seeder {
     public function run(){
         factory(Story::class,30)->create();

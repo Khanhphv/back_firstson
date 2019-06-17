@@ -13,18 +13,15 @@ class CreateStoriesTable extends Migration
      */
     public function up()
     {
-        Schema::create('stories', function (Blueprint $table) {
+        Schema::create('story', function (Blueprint $table) {
             $table->increments('id');
             $table->string('name', 500);
-//            $table->dateTime('update_date');
 //            $table->integer('chapter_id');
             $table->integer('likes')->default(0);
             $table->integer('views')->default(0);
-            $table->integer('category_id')->unsigned();
             $table->integer('author_id')->unsigned();
             $table->boolean('status')->default(0);
-            $table->foreign("category_id")->references("id")->on("categories")->onDelete('cascade');
-            $table->foreign("author_id")->references("id")->on("authors")->onDelete('cascade');
+            $table->foreign("author_id")->references("id")->on("author")->onDelete('cascade');
             $table->timestamps();
         });
     }
@@ -36,6 +33,6 @@ class CreateStoriesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('stories');
+        Schema::dropIfExists('story');
     }
 }

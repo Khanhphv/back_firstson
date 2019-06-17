@@ -5,7 +5,7 @@ namespace App\Repositories;
 
 use App\Object\ResultObject ;
 use App\Object\StoryObject;
-use App\Story;
+use App\Model\Story;
 use http\Exception;
 class StoryRepositories
 {
@@ -15,27 +15,19 @@ class StoryRepositories
         $storyFomat = new StoryObject();
         try {
             if($limit ===0){
-                $listStory = Story::with('category', 'author')->get();
+                $listStory = Story::with( 'categories','author')->get();
             } else {
-                $listStory = Story::with('category', 'author')->paginate($limit);
+                $listStory = Story::with ('categories', 'author')->paginate($limit);
             };
             if ($listStory){
-                $data = [];
-                foreach ($listStory as $story){
-                    $tmp = new \stdClass();
-                    $tmp->id = $story->id;
-                    $tmp->name = $story->name;
-                    $tmp->category = $story->category->name;
-                    $tmp->author = $story->author->name;
-                    $tmp->status = $story->status;
-                    $tmp->updated_at = $story->updated_at;
-                    array_push($data, $tmp);
-                }
-                $result->result = $data;
+                $result->result = $listStory;
                 $result->message = "Get list story";
                 $result->messageCode = 1;
             }
-        } catch (Exception $exception){}
+        } catch (Exception $exception){
+            $result->messageCode = 0;
+            $result->message = $exception->getMessage();
+        }
         return $result;
     }
 

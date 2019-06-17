@@ -1,8 +1,8 @@
 <?php
 
 use Illuminate\Database\Seeder;
-
-class AuthorTableSeeder extends Seeder
+use App\Model\StoryCategory;
+class StoryCategorySeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -11,6 +11,6 @@ class AuthorTableSeeder extends Seeder
      */
     public function run()
     {
-        factory(\App\Model\Author::class,10)->create();
+        factory(StoryCategory::class, 50)->create();
     }
 }

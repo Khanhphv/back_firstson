@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
-use App\Story;
+use App\Model\Story;
 use App\Http\Resources\Story as StoryResource;
 use App\Http\Requests\StoryRequest;
 use App\Http\Resources\Failed;
@@ -64,7 +64,7 @@ class StoryController extends Controller
     {
         $repo = new StoryRepositories();
         $listRepo = $repo->getIndex($id);
-        return response()->json([$listRepo],200);
+        return response()->json($listRepo,200);
     }
 
     /**

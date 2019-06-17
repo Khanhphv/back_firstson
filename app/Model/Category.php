@@ -1,13 +1,14 @@
 <?php
 
-namespace App;
+namespace App\Model;
 
 use Illuminate\Database\Eloquent\Model;
 
 class Category extends Model
 {
-    protected $table = "categories";
+    protected $table = "category";
+    protected $hidden = ['created_at','updated_at'];
     public function story() {
-        return $this->hasMany('App\Story');
+        return $this->belongsToMany(Story::class);
     }
 }
