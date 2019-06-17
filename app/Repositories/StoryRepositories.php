@@ -3,16 +3,19 @@
 
 namespace App\Repositories;
 
+use App\Category;
+use App\Model\StoryCategory;
 use App\Object\ResultObject ;
 use App\Object\StoryObject;
 use App\Model\Story;
 use http\Exception;
+use Illuminate\Support\Facades\DB;
 class StoryRepositories
 {
 
-    public function getList($limit =0){
+    public function getList($limit =0 , $param){
         $result = new ResultObject();
-        $storyFomat = new StoryObject();
+        $listStory = Story::with( 'categories','authors');
         try {
             if($limit ===0){
                 $listStory = Story::with( 'categories','author')->get();
@@ -34,7 +37,7 @@ class StoryRepositories
     public function getIndex($id = 0){
         $result = new ResultObject();
         try {
-            $story = Story::findOrFail($id);
+            $story = Story::with('categories','authors')->findOrFail($id);
             if($story){
                 $result->messageCode = 1;
                 $result->message = "Get success";

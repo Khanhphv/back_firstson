@@ -14,8 +14,8 @@ class Story extends Model
         return $this->belongsToMany(Category::class, 'story_category');
     }
 
-    public function author()
+    public function authors()
     {
-        return $this->belongsTo(Author::class);
+        return $this->belongsTo('App\Author', 'author_id');
     }
 }
