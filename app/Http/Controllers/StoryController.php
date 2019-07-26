@@ -23,7 +23,7 @@ class StoryController extends Controller
     public function index(Request $rq)
     {
         $repo = new StoryRepositories();
-            $listRepo = $repo->getList(20, $rq);
+        $listRepo = $repo->getListStory(20, $rq);
         return response()->json($listRepo,200);
 
     }
@@ -41,7 +41,6 @@ class StoryController extends Controller
         $story->name = $request->input('name');
         $story->category_id = $request->input('category_id');
         $story->author_id = $request->input('author_id');
-        $khanh = 'Khanh';
         if (!$category->isExist($story->category_id)) {
             return new Failed('');
         }
