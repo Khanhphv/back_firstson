@@ -44,7 +44,6 @@ class CategoryController extends Controller
         }
         $category->name = $request->name;
         $category->out_flag = 1;
-        // $category = $request->i
         if ($category->save()) {
             return new Success('');
         } else return new Failed('');
