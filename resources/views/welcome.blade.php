@@ -71,17 +71,20 @@
         </style>
     </head>
     <body>
-        <div class="flex-center position-ref full-height">
-            <div class="content">
-                <label for="">Username</label>
-                <input type="text">
-                <label for="">Password</label>
-                <input type="text">
+        <form method="post" action="{{url('/login')}}" enctype="multipart/form-data">
+        {{ csrf_field() }}>
+            <div class="flex-center position-ref full-height">
+                <div class="content">
+                    <label for="">Username</label>
+                    <input name="name" type="text" >
+                    <label for="">Password</label>
+                    <input name ="password" type="password">
+                </div>
+                <br>
+                <div class="button">
+                    <button>Login</button>
+                </div>
             </div>
-            <br>
-            <div class="button">
-                <button>Login</button>
-            </div>
-        </div>
+        </form>
     </body>
 </html>

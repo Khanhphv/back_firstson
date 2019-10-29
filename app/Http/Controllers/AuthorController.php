@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use App\Model\Author;
 use Illuminate\Http\Request;
 use App\Http\Resources\Failed;
-use App\Http\Requests\CategoryRequest;
 use App\Http\Resources\Category as CategoryResource;
 use App\Http\Resources\Success;
 
